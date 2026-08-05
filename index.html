@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>For Sema</title>
+<meta name="description" content="A little surprise for Sema.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Ambient background layers, present throughout -->
+<div class="ambient" aria-hidden="true">
+  <div class="ambient__glow ambient__glow--a"></div>
+  <div class="ambient__glow ambient__glow--b"></div>
+  <div class="ambient__glow ambient__glow--c"></div>
+  <div class="grain"></div>
+</div>
+
+<canvas id="particles" aria-hidden="true"></canvas>
+
+<!-- ============ LOADING SCREEN ============ -->
+<section id="loader" class="loader" aria-label="Loading">
+  <div class="loader__inner">
+    <div class="loader__mark">
+      <svg viewBox="0 0 100 100" class="loader__petal-svg" aria-hidden="true">
+        <path class="loader__petal" d="M50 50 C 50 20, 65 5, 50 2 C 35 5, 50 20, 50 50 Z"/>
+      </svg>
+    </div>
+    <p class="loader__label">for sema</p>
+    <div class="loader__bar"><div class="loader__bar-fill"></div></div>
+  </div>
+</section>
+
+<!-- ============ SCENE 1 — LANDING ============ -->
+<main id="scene-landing" class="scene scene--landing" aria-hidden="false">
+  <div class="scene__content">
+    <p class="eyebrow reveal-line" data-delay="0">a little something</p>
+    <h1 class="landing__title reveal-line" data-delay="1">For Sema <span class="bloom-emoji">🌸</span></h1>
+    <p class="landing__subtitle reveal-line" data-delay="2">I made something I'd like to share with you.</p>
+    <button id="open-btn" class="btn btn--primary reveal-line" data-delay="3" type="button">
+      <span class="btn__label">Open</span>
+      <span class="btn__glow" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="scroll-hint reveal-line" data-delay="4" aria-hidden="true">
+    <span></span>
+  </div>
+</main>
+
+<!-- ============ SCENE 2 — BOUQUET REVEAL ============ -->
+<section id="scene-bouquet" class="scene scene--bouquet" aria-hidden="true">
+  <div class="bouquet-stage">
+    <div class="bouquet-sparkles" aria-hidden="true"></div>
+    <div class="floating-petals" aria-hidden="true"></div>
+
+    <!-- Realistic layered white lily bouquet, hand-built SVG -->
+    <svg id="bouquet-svg" class="bouquet-svg" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A bouquet of white lilies">
+      <defs>
+        <radialGradient id="petalCore" cx="50%" cy="88%" r="90%">
+          <stop offset="0%" stop-color="#fffdf8"/>
+          <stop offset="45%" stop-color="#fffaf0"/>
+          <stop offset="78%" stop-color="#f7ecdb"/>
+          <stop offset="100%" stop-color="#ecdcc4"/>
+        </radialGradient>
+        <linearGradient id="petalShade" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+          <stop offset="60%" stop-color="#e7d4b8" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#cbb694" stop-opacity="0.45"/>
+        </linearGradient>
+        <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8faa7c"/>
+          <stop offset="50%" stop-color="#7c9a6a"/>
+          <stop offset="100%" stop-color="#66845a"/>
+        </linearGradient>
+        <radialGradient id="anther" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#e8a94f"/>
+          <stop offset="100%" stop-color="#c07f2c"/>
+        </radialGradient>
+        <radialGradient id="throatGlow" cx="50%" cy="100%" r="80%">
+          <stop offset="0%" stop-color="#f2d98f" stop-opacity="0.85"/>
+          <stop offset="55%" stop-color="#e9c877" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#e9c877" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#7a6a4a" flood-opacity="0.18"/>
+        </filter>
+        <filter id="petalShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#8a7550" flood-opacity="0.22"/>
+        </filter>
+        <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a9c191"/>
+          <stop offset="100%" stop-color="#6f8f5f"/>
+        </linearGradient>
+        <linearGradient id="wrapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f4ead8"/>
+          <stop offset="100%" stop-color="#e5d3b2"/>
+        </linearGradient>
+      </defs>
+
+      <!-- soft ground shadow -->
+      <ellipse cx="450" cy="800" rx="230" ry="26" fill="#7a6a4a" opacity="0.14"/>
+
+      <!-- wrapping paper -->
+      <g id="wrap">
+        <path d="M300 620 L450 860 L600 620 L560 560 L340 560 Z" fill="url(#wrapGrad)" stroke="#d8c39c" stroke-width="1.5"/>
+        <path d="M300 620 L340 560 L560 560 L600 620 L450 660 Z" fill="#faf3e4" opacity="0.6"/>
+      </g>
+
+      <!-- stems -->
+      <g id="stems" stroke-linecap="round">
+        <path d="M450 640 C 448 560, 430 480, 410 400" stroke="url(#stemGrad)" stroke-width="7" fill="none"/>
+        <path d="M450 640 C 452 560, 470 480, 495 410" stroke="url(#stemGrad)" stroke-width="7" fill="none"/>
+        <path d="M450 640 C 450 555, 450 470, 450 380" stroke="url(#stemGrad)" stroke-width="8" fill="none"/>
+        <path d="M450 645 C 430 570, 380 500, 330 450" stroke="url(#stemGrad)" stroke-width="6" fill="none"/>
+        <path d="M450 645 C 470 570, 525 500, 575 455" stroke="url(#stemGrad)" stroke-width="6" fill="none"/>
+      </g>
+
+      <!-- leaves -->
+      <g id="leaves">
+        <path d="M420 560 C 370 540, 330 560, 300 610 C 350 610, 395 600, 420 560 Z" fill="url(#leafGrad)" filter="url(#petalShadow)"/>
+        <path d="M485 555 C 535 530, 580 545, 615 590 C 565 595, 515 590, 485 555 Z" fill="url(#leafGrad)" filter="url(#petalShadow)"/>
+        <path d="M450 500 C 430 460, 435 420, 460 385 C 475 425, 470 465, 450 500 Z" fill="url(#leafGrad)" opacity="0.92"/>
+      </g>
+
+      <!-- ===================== LILY FLOWERS ===================== -->
+      <!-- Each lily is a <g class="lily"> containing 6 petals (3 outer, 3 inner offset), 6 stamens, and a highlight -->
+
+      <!-- LILY 1 — center hero, largest -->
+      <g class="lily lily--1" transform="translate(450,370)">
+        <g class="lily__bloom">
+          <g class="petal-set petal-set--outer">
+            <path class="petal" d="M0,0 C -14,-70 -55,-125 -95,-150 C -110,-95 -85,-25 -30,10 C -18,7 -8,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal" d="M0,0 C 14,-70 55,-125 95,-150 C 110,-95 85,-25 30,10 C 18,7 8,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal" d="M0,0 C 4,-78 0,-140 -6,-172 C -32,-135 -34,-60 -10,8 C -6,6 -3,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          </g>
+          <g class="petal-set petal-set--inner">
+            <path class="petal petal--inner" d="M0,0 C -8,-55 -38,-100 -68,-122 C -80,-80 -60,-22 -20,6 C -13,4 -6,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal petal--inner" d="M0,0 C 8,-55 38,-100 68,-122 C 80,-80 60,-22 20,6 C 13,4 6,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal petal--inner" d="M0,0 C 2,-60 -2,-112 -8,-138 C -24,-108 -24,-48 -6,7 C -4,5 -2,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          </g>
+          <!-- vein overlay for realism -->
+          <g class="petal-veins" stroke="#d8c6a4" stroke-width="0.6" fill="none" opacity="0.5">
+            <path d="M0,0 C -10,-45 -35,-85 -60,-108"/>
+            <path d="M0,0 C 10,-45 35,-85 60,-108"/>
+            <path d="M0,0 C 0,-50 -2,-95 -6,-118"/>
+          </g>
+          <!-- throat glow -->
+          <ellipse cx="0" cy="-6" rx="26" ry="30" fill="url(#throatGlow)"/>
+          <!-- stamens -->
+          <g class="stamens">
+            <g class="stamen"><line x1="0" y1="-4" x2="-18" y2="-58" stroke="#e3cf9c" stroke-width="1.4"/><ellipse cx="-18" cy="-58" rx="5" ry="8" fill="url(#anther)" transform="rotate(-25 -18 -58)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="18" y2="-58" stroke="#e3cf9c" stroke-width="1.4"/><ellipse cx="18" cy="-58" rx="5" ry="8" fill="url(#anther)" transform="rotate(25 18 -58)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="-8" y2="-64" stroke="#e3cf9c" stroke-width="1.4"/><ellipse cx="-8" cy="-64" rx="5" ry="8" fill="url(#anther)" transform="rotate(-8 -8 -64)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="8" y2="-64" stroke="#e3cf9c" stroke-width="1.4"/><ellipse cx="8" cy="-64" rx="5" ry="8" fill="url(#anther)" transform="rotate(8 8 -64)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="0" y2="-70" stroke="#e3cf9c" stroke-width="1.4"/><ellipse cx="0" cy="-70" rx="5" ry="8" fill="url(#anther)"/></g>
+            <g class="stamen stamen--pistil"><line x1="0" y1="-4" x2="0" y2="-50" stroke="#eee2c4" stroke-width="2"/><ellipse cx="0" cy="-50" rx="3.4" ry="5" fill="#f7f0da"/></g>
+          </g>
+        </g>
+      </g>
+
+      <!-- LILY 2 — left, mid size, slightly turned -->
+      <g class="lily lily--2" transform="translate(330,430) rotate(-18) scale(0.82)">
+        <g class="lily__bloom">
+          <g class="petal-set petal-set--outer">
+            <path class="petal" d="M0,0 C -14,-70 -55,-125 -95,-150 C -110,-95 -85,-25 -30,10 C -18,7 -8,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal" d="M0,0 C 14,-70 55,-125 95,-150 C 110,-95 85,-25 30,10 C 18,7 8,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal" d="M0,0 C 4,-78 0,-140 -6,-172 C -32,-135 -34,-60 -10,8 C -6,6 -3,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          </g>
+          <g class="petal-set petal-set--inner">
+            <path class="petal petal--inner" d="M0,0 C -8,-55 -38,-100 -68,-122 C -80,-80 -60,-22 -20,6 C -13,4 -6,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal petal--inner" d="M0,0 C 8,-55 38,-100 68,-122 C 80,-80 60,-22 20,6 C 13,4 6,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal petal--inner" d="M0,0 C 2,-60 -2,-112 -8,-138 C -24,-108 -24,-48 -6,7 C -4,5 -2,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          </g>
+          <ellipse cx="0" cy="-6" rx="24" ry="28" fill="url(#throatGlow)"/>
+          <g class="stamens">
+            <g class="stamen"><line x1="0" y1="-4" x2="-16" y2="-54" stroke="#e3cf9c" stroke-width="1.3"/><ellipse cx="-16" cy="-54" rx="4.5" ry="7" fill="url(#anther)" transform="rotate(-25 -16 -54)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="16" y2="-54" stroke="#e3cf9c" stroke-width="1.3"/><ellipse cx="16" cy="-54" rx="4.5" ry="7" fill="url(#anther)" transform="rotate(25 16 -54)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="0" y2="-64" stroke="#e3cf9c" stroke-width="1.3"/><ellipse cx="0" cy="-64" rx="4.5" ry="7" fill="url(#anther)"/></g>
+            <g class="stamen stamen--pistil"><line x1="0" y1="-4" x2="0" y2="-46" stroke="#eee2c4" stroke-width="1.8"/><ellipse cx="0" cy="-46" rx="3" ry="4.5" fill="#f7f0da"/></g>
+          </g>
+        </g>
+      </g>
+
+      <!-- LILY 3 — right, mid size -->
+      <g class="lily lily--3" transform="translate(565,435) rotate(16) scale(0.78)">
+        <g class="lily__bloom">
+          <g class="petal-set petal-set--outer">
+            <path class="petal" d="M0,0 C -14,-70 -55,-125 -95,-150 C -110,-95 -85,-25 -30,10 C -18,7 -8,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal" d="M0,0 C 14,-70 55,-125 95,-150 C 110,-95 85,-25 30,10 C 18,7 8,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal" d="M0,0 C 4,-78 0,-140 -6,-172 C -32,-135 -34,-60 -10,8 C -6,6 -3,3 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          </g>
+          <g class="petal-set petal-set--inner">
+            <path class="petal petal--inner" d="M0,0 C -8,-55 -38,-100 -68,-122 C -80,-80 -60,-22 -20,6 C -13,4 -6,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal petal--inner" d="M0,0 C 8,-55 38,-100 68,-122 C 80,-80 60,-22 20,6 C 13,4 6,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+            <path class="petal petal--inner" d="M0,0 C 2,-60 -2,-112 -8,-138 C -24,-108 -24,-48 -6,7 C -4,5 -2,2 0,0 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          </g>
+          <ellipse cx="0" cy="-6" rx="24" ry="28" fill="url(#throatGlow)"/>
+          <g class="stamens">
+            <g class="stamen"><line x1="0" y1="-4" x2="-16" y2="-54" stroke="#e3cf9c" stroke-width="1.3"/><ellipse cx="-16" cy="-54" rx="4.5" ry="7" fill="url(#anther)" transform="rotate(-25 -16 -54)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="16" y2="-54" stroke="#e3cf9c" stroke-width="1.3"/><ellipse cx="16" cy="-54" rx="4.5" ry="7" fill="url(#anther)" transform="rotate(25 16 -54)"/></g>
+            <g class="stamen"><line x1="0" y1="-4" x2="0" y2="-64" stroke="#e3cf9c" stroke-width="1.3"/><ellipse cx="0" cy="-64" rx="4.5" ry="7" fill="url(#anther)"/></g>
+            <g class="stamen stamen--pistil"><line x1="0" y1="-4" x2="0" y2="-46" stroke="#eee2c4" stroke-width="1.8"/><ellipse cx="0" cy="-46" rx="3" ry="4.5" fill="#f7f0da"/></g>
+          </g>
+        </g>
+      </g>
+
+      <!-- LILY 4 — small bud, upper left, half-open -->
+      <g class="lily lily--4 lily--bud" transform="translate(378,330) rotate(-10) scale(0.42)">
+        <g class="lily__bloom">
+          <path class="petal" d="M0,0 C -10,-60 -20,-110 -18,-150 C -45,-115 -50,-55 -14,4 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          <path class="petal" d="M0,0 C 10,-60 20,-110 18,-150 C 45,-115 50,-55 14,4 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          <path class="petal" d="M0,0 C 0,-70 0,-125 0,-160 C -18,-130 -18,-60 0,4 Z" fill="url(#petalCore)" opacity="0.95"/>
+        </g>
+      </g>
+
+      <!-- LILY 5 — small bud, upper right -->
+      <g class="lily lily--5 lily--bud" transform="translate(535,325) rotate(12) scale(0.4)">
+        <g class="lily__bloom">
+          <path class="petal" d="M0,0 C -10,-60 -20,-110 -18,-150 C -45,-115 -50,-55 -14,4 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          <path class="petal" d="M0,0 C 10,-60 20,-110 18,-150 C 45,-115 50,-55 14,4 Z" fill="url(#petalCore)" filter="url(#petalShadow)"/>
+          <path class="petal" d="M0,0 C 0,-70 0,-125 0,-160 C -18,-130 -18,-60 0,4 Z" fill="url(#petalCore)" opacity="0.95"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Appreciation message, revealed after bloom -->
+  <div id="message-block" class="message-block">
+    <p class="message-line" data-line="0">Hi Sema,</p>
+    <p class="message-line" data-line="1">Before anything else, thank you for opening this little surprise.</p>
+    <p class="message-line" data-line="2">I wanted to make something different&mdash;something made with time, thought, and appreciation.</p>
+    <p class="message-line" data-line="3">Over time you've become someone I genuinely appreciate.</p>
+    <p class="message-line" data-line="4">Not because of one big moment, but because of all the small ones.</p>
+    <p class="message-line message-line--soft" data-line="5">The conversations.</p>
+    <p class="message-line message-line--soft" data-line="6">The laughs.</p>
+    <p class="message-line" data-line="7">The ordinary days that somehow became better.</p>
+    <p class="message-line" data-line="8">Thank you for your kindness, your patience, and for simply being yourself.</p>
+    <p class="message-line" data-line="9">Since white lilies are your favorite flowers, they had to be here.</p>
+    <p class="message-line message-line--emph" data-line="10">I hope this little gift makes you smile.</p>
+
+    <button id="continue-btn" class="btn btn--secondary message-line" data-line="11" type="button">
+      <span class="btn__label">There's one more thing&hellip;</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============ SCENE 3 — THE ASK ============ -->
+<section id="scene-ask" class="scene scene--ask" aria-hidden="true">
+  <div class="ask-block">
+    <p class="ask-line" data-line="0">I've been meaning to ask&hellip;</p>
+    <p class="ask-line" data-line="1">If you're free sometime next week, I'd really enjoy spending some time together.</p>
+    <p class="ask-line ask-line--soft" data-line="2">Maybe coffee.</p>
+    <p class="ask-line ask-line--soft" data-line="3">Maybe a walk.</p>
+    <p class="ask-line ask-line--soft" data-line="4">Or just somewhere we can sit and talk.</p>
+    <p class="ask-line" data-line="5">No pressure at all.</p>
+    <p class="ask-line ask-line--emph" data-line="6">I just thought it would be nice.</p>
+
+    <div class="ask-actions ask-line" data-line="7">
+      <button id="yes-btn" class="btn btn--bloom" type="button">
+        <span class="btn__label">🌸 I'd love to</span>
+      </button>
+      <button id="no-btn" class="btn btn--ghost" type="button">
+        <span class="btn__label">🌿 Let's choose another day</span>
+      </button>
+    </div>
+
+    <p id="response-text" class="response-text" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- ============ SCENE 4 — CLOSING ============ -->
+<section id="scene-closing" class="scene scene--closing" aria-hidden="true">
+  <div class="closing-block">
+    <div class="closing-mark" aria-hidden="true">🌸</div>
+    <p class="closing-text">Thank you for experiencing this little surprise.</p>
+    <p class="closing-sub">The lilies will stay here, for whenever you'd like to visit them again.</p>
+    <button id="replay-btn" class="btn btn--ghost btn--small" type="button">
+      <span class="btn__label">Visit the bouquet again</span>
+    </button>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
